@@ -1,0 +1,46 @@
+﻿@model List<Beer>
+
+<h1>Cervezas</h1>
+
+<p><a asp-action="Create">Crear</a></p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var beer in Model)
+        {
+            <tr>
+                <td>@beer.Name</td>
+                <td>@beer.Brand.Name</td>
+                <td>
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete(@beer.BeerId)">Eliminar</button>
+                    <a asp-action="Update" asp-route-id="@beer.BeerId" class="btn btn-warning">Editar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form id="deleteForm" asp-action="Delete" method="post" style="display:none;">
+    <input type="hidden" name="id" id="deleteId" />
+</form>
+
+
+
+<script>
+    function confirmDelete(id) {
+        console.log("Botón clicado, ID: ", id); // Verifica en la consola
+        if (confirm("¿Estás seguro de que deseas eliminar esta cerveza?")) {
+            document.getElementById('deleteId').value = id;
+            document.getElementById('deleteForm').submit();
+        }
+    }
+
+</script>
